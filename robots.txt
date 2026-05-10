@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://taxradar-usa.vercel.app/sitemap.xml
