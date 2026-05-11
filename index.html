@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VC0Y3B8ZF0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VC0Y3B8ZF0');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="pek_oHFsRrtgR_Y6ti-HMARB3N1V5Zg0nqj-YD_eIKc" />
@@ -68,7 +76,6 @@
         function updateSEO() {
             const state = document.getElementById('state').value;
             const stateLabel = document.querySelector(`#state option[value="${state}"]`).innerText;
-            // الضربة القاضية: العنوان يتغير لكل ولاية بدقة
             document.title = `Tax Calculator ${stateLabel} | 2026 Forecast`;
             document.getElementById('dynamicDesc').setAttribute("content", `Master your ${stateLabel} freelance taxes with TaxRadar.`);
             document.getElementById('heroSub').innerText = `Elite Tax Forecasting for ${stateLabel}`;
@@ -87,7 +94,6 @@
             const params = new URLSearchParams(window.location.search);
             const st = params.get('state');
             if (st) {
-                // هاد الجزء كيخلي أي ولاية دخل ليها جوجل تولي هي الأساسية
                 const clean = st.toLowerCase().replace("-", " ");
                 const option = Array.from(document.querySelectorAll('#state option')).find(o => o.innerText.toLowerCase() === clean);
                 if (option) { 
@@ -97,7 +103,15 @@
             }
         };
         function calculate() { document.getElementById('results').style.display='block'; liveCalc(); }
-        function liveCalc() { /* كود الحساب المعتاد */ }
+        function liveCalc() {
+            const income = parseFloat(document.getElementById('income').value) || 0;
+            const state = document.getElementById('state').value;
+            const stateRate = rates[state] || 0;
+            const federalRate = 0.15; // تقديري فقط
+            const totalTax = income * (stateRate + federalRate);
+            const net = income - totalTax;
+            document.getElementById('takeHome').innerText = '$' + net.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
     </script>
 </body>
 </html>
