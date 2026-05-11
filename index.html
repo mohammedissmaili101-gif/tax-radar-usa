@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="pek_oHFsRrtgR_Y6ti-HMARB3N1V5Zg0nqj-YD_eIKc" />
-    <title>TaxRadar | Best 2026 Freelance Tax Calculator (CA, NY, TX, FL)</title>
-    <meta name="description" content="Calculate your 2026 take-home pay instantly. Accurate freelance tax calculator for US contractors. 100% Private.">
+    
+    <title id="dynamicTitle">TaxRadar | Best 2026 Freelance Tax Calculator (All 50 States)</title>
+    <meta name="description" id="dynamicDesc" content="Calculate your 2026 take-home pay instantly. Accurate freelance tax calculator for all 50 US states. 100% Private.">
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2215%22 fill=%22%23050505%22/><text y=%22.9em%22 x=%2250%22 font-size=%2280%22 font-weight=%22900%22 text-anchor=%22middle%22 fill=%22%2339FF14%22>T</text></svg>">
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     
     <style>
@@ -39,8 +39,8 @@
 
     <div class="hero">
         <div class="logo-box">T</div>
-        <h1>TaxRadar<span>.io</span></h1>
-        <p style="color:var(--muted)">Accurate 2026 Freelance Tax Forecasting</p>
+        <h1 id="heroTitle">TaxRadar<span>.io</span></h1>
+        <p id="heroSub" style="color:var(--muted)">Accurate 2026 Freelance Tax Forecasting</p>
     </div>
 
     <div class="app-container">
@@ -51,10 +51,56 @@
         <div class="input-group">
             <label>State</label>
             <select id="state" onchange="liveCalc()">
-                <option value="california">California</option>
-                <option value="newyork">New York</option>
-                <option value="texas">Texas (0% State Tax)</option>
-                <option value="florida">Florida (0% State Tax)</option>
+                <option value="alabama">Alabama (5%)</option>
+                <option value="alaska">Alaska (0%)</option>
+                <option value="arizona">Arizona (2.5%)</option>
+                <option value="arkansas">Arkansas (4.4%)</option>
+                <option value="california">California (9.3%)</option>
+                <option value="colorado">Colorado (4.4%)</option>
+                <option value="connecticut">Connecticut (5%)</option>
+                <option value="delaware">Delaware (0%)</option>
+                <option value="florida">Florida (0%)</option>
+                <option value="georgia">Georgia (5.49%)</option>
+                <option value="hawaii">Hawaii (8.25%)</option>
+                <option value="idaho">Idaho (5.8%)</option>
+                <option value="illinois">Illinois (4.95%)</option>
+                <option value="indiana">Indiana (3.15%)</option>
+                <option value="iowa">Iowa (5.7%)</option>
+                <option value="kansas">Kansas (5.7%)</option>
+                <option value="kentucky">Kentucky (5%)</option>
+                <option value="louisiana">Louisiana (4.25%)</option>
+                <option value="maine">Maine (5.8%)</option>
+                <option value="maryland">Maryland (4.75%)</option>
+                <option value="massachusetts">Massachusetts (5%)</option>
+                <option value="michigan">Michigan (4.25%)</option>
+                <option value="minnesota">Minnesota (5.35%)</option>
+                <option value="mississippi">Mississippi (5%)</option>
+                <option value="missouri">Missouri (4.95%)</option>
+                <option value="montana">Montana (0%)</option>
+                <option value="nebraska">Nebraska (5.84%)</option>
+                <option value="nevada">Nevada (0%)</option>
+                <option value="newhampshire">New Hampshire (0%)</option>
+                <option value="newjersey">New Jersey (5.5%)</option>
+                <option value="newmexico">New Mexico (4.9%)</option>
+                <option value="newyork">New York (6.5%)</option>
+                <option value="northcarolina">North Carolina (4.5%)</option>
+                <option value="northdakota">North Dakota (1.1%)</option>
+                <option value="ohio">Ohio (2.75%)</option>
+                <option value="oklahoma">Oklahoma (4.75%)</option>
+                <option value="oregon">Oregon (6.75%)</option>
+                <option value="pennsylvania">Pennsylvania (3.07%)</option>
+                <option value="rhodeisland">Rhode Island (3.75%)</option>
+                <option value="southcarolina">South Carolina (3%)</option>
+                <option value="southdakota">South Dakota (0%)</option>
+                <option value="tennessee">Tennessee (0%)</option>
+                <option value="texas">Texas (0%)</option>
+                <option value="utah">Utah (4.85%)</option>
+                <option value="vermont">Vermont (3.35%)</option>
+                <option value="virginia">Virginia (5.75%)</option>
+                <option value="washington">Washington (0%)</option>
+                <option value="westvirginia">West Virginia (5.12%)</option>
+                <option value="wisconsin">Wisconsin (5.3%)</option>
+                <option value="wyoming">Wyoming (0%)</option>
             </select>
         </div>
         <button onclick="calculate()">Calculate Net Pay</button>
@@ -78,18 +124,47 @@
     </footer>
 
     <script>
+        const rates = {
+            alabama: 0.05, alaska: 0, arizona: 0.025, arkansas: 0.044, california: 0.093,
+            colorado: 0.044, connecticut: 0.05, delaware: 0, florida: 0, georgia: 0.0549,
+            hawaii: 0.0825, idaho: 0.058, illinois: 0.0495, indiana: 0.0315, iowa: 0.057,
+            kansas: 0.057, kentucky: 0.05, louisiana: 0.0425, maine: 0.058, maryland: 0.0475,
+            massachusetts: 0.05, michigan: 0.0425, minnesota: 0.0535, mississippi: 0.05,
+            missouri: 0.0495, montana: 0, nebraska: 0.0584, nevada: 0, newhampshire: 0,
+            newjersey: 0.055, newmexico: 0.049, newyork: 0.065, northcarolina: 0.045,
+            northdakota: 0.011, ohio: 0.0275, oklahoma: 0.0475, oregon: 0.0675,
+            pennsylvania: 0.0307, rhodeisland: 0.0375, southcarolina: 0.03, southdakota: 0,
+            tennessee: 0, texas: 0, utah: 0.0485, vermont: 0.0335, virginia: 0.0575,
+            washington: 0, westvirginia: 0.0512, wisconsin: 0.053, wyoming: 0
+        };
+
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const st = params.get('state');
+            if (st) {
+                const cleanState = st.toLowerCase().replace("-", "");
+                if (rates.hasOwnProperty(cleanState)) {
+                    document.getElementById('state').value = cleanState;
+                    const formattedState = st.replace("-", " ");
+                    document.getElementById('dynamicTitle').innerText = `Tax Calculator for ${formattedState} | Best 2026 Forecast`;
+                    document.getElementById('dynamicDesc').setAttribute("content", `Calculate your net pay in ${formattedState} for 2026. Precision freelance tax forecasting by TaxRadar.`);
+                    document.getElementById('heroSub').innerText = `Accurate 2026 Tax Forecasting for ${formattedState}`;
+                }
+            }
+        };
+
         function calculate() {
             document.getElementById('results').style.display = 'block';
             document.getElementById('shareBtn').style.display = 'block';
             liveCalc();
         }
+
         function liveCalc() {
             const income = parseFloat(document.getElementById('income').value) || 0;
             const state = document.getElementById('state').value;
-            const rates = { california: 0.093, newyork: 0.065, texas: 0, florida: 0 };
             const fed = 0.22, fica = 0.153, ded = 14600;
             const taxFed = Math.max(0, (income - ded) * fed);
-            const taxState = income * rates[state];
+            const taxState = income * (rates[state] || 0);
             const taxFica = income * fica;
             const total = taxFed + taxState + taxFica;
             const net = Math.max(0, income - total);
@@ -97,6 +172,7 @@
             document.getElementById('monthlyNet').innerText = '$' + Math.round(net/12).toLocaleString();
             document.getElementById('totalTax').innerText = '$' + total.toLocaleString();
         }
+
         function shareResults() {
             const text = `My estimated net pay is ${document.getElementById('takeHome').innerText} on TaxRadar.io!`;
             if (navigator.share) {
