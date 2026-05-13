@@ -13,9 +13,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="pek_oHFsRrtgR_Y6ti-HMARB3N1V5Zg0nqj-YD_eIKc" />
     
-    <title id="dynamicTitle">TaxRadar | #1 US Freelance Tax Calculator 2026</title>
-    <meta name="description" id="dynamicDesc" content="Calculate your 2026 net pay and taxes in any US state. Precision tax forecasting by Focushive Intelligence.">
+    <title>TaxRadar | #1 Freelance Tax Calculator — All 50 US States 2026</title>
+    <meta name="description" content="Calculate your exact 2026 freelance take-home pay in any US state. Free tax calculator for contractors and self-employed. Instant results.">
     
+    <link rel="canonical" href="https://tax-radar-usa.vercel.app/" />
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/calculator.png">
     <link rel="shortcut icon" href="https://img.icons8.com/fluency/48/calculator.png">
 
@@ -46,7 +47,7 @@
     <div class="hero">
         <div class="logo-box">T</div>
         <h1>TaxRadar<span>.io</span></h1>
-        <p id="heroSub" style="color:var(--muted); font-weight: 600;">The Elite Tax Forecast Engine</p>
+        <p id="heroSub" style="color:var(--muted); font-weight: 600;">The Elite Tax Forecast Engine — All 50 States</p>
     </div>
 
     <div class="app-container">
@@ -76,8 +77,7 @@
         function updateSEO() {
             const state = document.getElementById('state').value;
             const stateLabel = document.querySelector(`#state option[value="${state}"]`).innerText;
-            document.title = `Tax Calculator ${stateLabel} | 2026 Forecast`;
-            document.getElementById('dynamicDesc').setAttribute("content", `Master your ${stateLabel} freelance taxes with TaxRadar.`);
+            document.title = `${stateLabel} Freelance Tax Calculator 2026 | TaxRadar`;
             document.getElementById('heroSub').innerText = `Elite Tax Forecasting for ${stateLabel}`;
         }
 
@@ -85,29 +85,19 @@
             const grid = document.getElementById('stateLinks');
             Object.keys(rates).forEach(s => {
                 const a = document.createElement('a');
-                const name = s.charAt(0).toUpperCase() + s.slice(1).replace("-", " ");
-                a.href = `?state=${name.replace(" ", "-")}`;
+                const name = s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, " ");
+                a.href = `/states/${s}.html`;
                 a.innerText = name;
                 grid.appendChild(a);
             });
-
-            const params = new URLSearchParams(window.location.search);
-            const st = params.get('state');
-            if (st) {
-                const clean = st.toLowerCase().replace("-", " ");
-                const option = Array.from(document.querySelectorAll('#state option')).find(o => o.innerText.toLowerCase() === clean);
-                if (option) { 
-                    document.getElementById('state').value = option.value; 
-                    updateSEO(); 
-                }
-            }
         };
+
         function calculate() { document.getElementById('results').style.display='block'; liveCalc(); }
         function liveCalc() {
             const income = parseFloat(document.getElementById('income').value) || 0;
             const state = document.getElementById('state').value;
             const stateRate = rates[state] || 0;
-            const federalRate = 0.15; // تقديري فقط
+            const federalRate = 0.15;
             const totalTax = income * (stateRate + federalRate);
             const net = income - totalTax;
             document.getElementById('takeHome').innerText = '$' + net.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
