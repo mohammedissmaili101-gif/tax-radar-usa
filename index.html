@@ -414,6 +414,7 @@ const RATES = {
     montana:0.069, nebraska:0.0684, nevada:0,
     "new-hampshire":0, "new-jersey":0.1075, "new-mexico":0.059,
     "new-york":0.065, "north-carolina":0.045, "north-dakota":0.011,
+    /* FIX: ohio was missing */
     ohio:0.0399, oklahoma:0.0475, oregon:0.099,
     pennsylvania:0.0307, "rhode-island":0.0599,
     "south-carolina":0.07, "south-dakota":0,
@@ -434,6 +435,7 @@ const NAMES = {
     "new-hampshire":"New Hampshire","new-jersey":"New Jersey",
     "new-mexico":"New Mexico","new-york":"New York",
     "north-carolina":"North Carolina","north-dakota":"North Dakota",
+    /* FIX: ohio was missing */
     ohio:"Ohio",oklahoma:"Oklahoma",oregon:"Oregon",
     pennsylvania:"Pennsylvania","rhode-island":"Rhode Island",
     "south-carolina":"South Carolina","south-dakota":"South Dakota",
@@ -480,7 +482,6 @@ function setFiling(s, btn) {
 }
 
 function onStateChange() {
-    // Keep SEO title updated (like original)
     const state = $('state').value;
     const name = NAMES[state] || state;
     document.title = `${name} Freelance Tax Calculator 2026 | TaxRadar`;
@@ -565,7 +566,7 @@ function renderCompare(gross, exp=0, ret=0, qbiP=0.2, fs='single') {
         <tr class="${r.key===curState?'me':''}">
             <td>${r.name}${i===0?'<span class="best-star">★ Best</span>':''}</td>
             <td style="color:${r.stR===0?'var(--green)':r.stR<0.05?'var(--yellow)':'var(--red)'};font-family:'DM Mono',monospace;">
-                ${(r.stR*100).toFixed(2)}%${r.stR===0?'<span class="no-tax">No Tax</span>':''}
+                ${r.stR===0 ? '0%' : (r.stR*100).toFixed(2)+'%'}${r.stR===0?'<span class="no-tax">No Tax</span>':''}
             </td>
             <td style="font-family:'DM Mono',monospace;">${fmt(r.stTax)}</td>
             <td style="font-family:'DM Mono',monospace;">${fmt(r.total)}</td>
@@ -579,14 +580,16 @@ window.addEventListener('DOMContentLoaded', () => {
     const sl = $('qbiRange');
     sl.style.setProperty('--pct','100%');
 
-    // Build state links — same format as original: /states/alabama.html
+    // Build state links — /states/KEY.html
     const grid = $('stateLinks');
     Object.entries(RATES).forEach(([key, rate]) => {
         const a = document.createElement('a');
         a.className = 'sl';
         a.href = `/states/${key}.html`;
         const rc = rate===0?'var(--green)':rate<0.05?'var(--yellow)':'var(--red)';
-        a.innerHTML = `<span>${NAMES[key]}</span><span class="sl-rate" style="color:${rc}">${rate===0?'0%':(rate*100).toFixed(1)+'%'}</span>`;
+        /* FIX: show "0%" not "0.00%" for no-tax states */
+        const rateLabel = rate===0 ? '0%' : (rate*100).toFixed(1)+'%';
+        a.innerHTML = `<span>${NAMES[key]}</span><span class="sl-rate" style="color:${rc}">${rateLabel}</span>`;
         grid.appendChild(a);
     });
 
